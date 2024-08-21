@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
+import com.joeahkim.chapaake.pages.lists.list
 
 @Composable
 fun Results(modifier: Modifier = Modifier) {
@@ -23,18 +24,7 @@ fun Results(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
-        Text(
-            text = "Results Page",
-            fontSize = 40.sp,
-            color = Color.Black,
-            fontWeight = FontWeight.Normal
-        )
+        list()
 
     }
-}
-@Composable
-@Preview
-fun ResultsPreview() {
-    Results()
-
 }
