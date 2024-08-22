@@ -14,7 +14,7 @@ fun getPreviousResults(): List<PreviousResults>{
     return listOf(
         PreviousResults("Arsenal","Chelsea","11/2/23","Home","Win"),
         PreviousResults("Manchester","Chelsea","11/2/23","Home","Win"),
-        PreviousResults("City","Chelsea","Home","11/2/24","Win"),
+        PreviousResults("City","Chelsea","11/2/24","Home","Loose"),
         PreviousResults("Tottenham","Chelsea","11/2/23","Home","Win")
 
     )

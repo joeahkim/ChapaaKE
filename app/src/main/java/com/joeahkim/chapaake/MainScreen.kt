@@ -7,8 +7,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -32,12 +34,16 @@ fun MainScreen (modifier: Modifier = Modifier){
     val navItem = listOf(
         NavItem("Home", Icons.Default.Home, 0),
         NavItem("Notifications", Icons.Default.Notifications, 5),
-        NavItem("Results", Icons.Default.Refresh, 4),
+        NavItem("Results", Icons.Default.List, 4),
     )
     var selectedIndex by remember { mutableStateOf(0) }
     Scaffold(
 
         modifier = Modifier.fillMaxSize(),
+        topBar = {
+            MyTopAppBar()
+        },
+
 
         bottomBar = {
             NavigationBar {

@@ -17,16 +17,14 @@ import androidx.compose.ui.unit.sp
 fun NotificationPage(modifier: Modifier = Modifier) {
     Column (
         modifier = modifier
-            .fillMaxSize()
-            .background(Color(0xFF488C9B)),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
             text = "Notification Page",
             fontSize = 40.sp,
-            color = Color.White,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.SemiBold
         )
 
     }

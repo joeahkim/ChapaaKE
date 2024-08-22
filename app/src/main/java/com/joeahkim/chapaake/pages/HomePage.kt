@@ -18,8 +18,7 @@ import androidx.compose.ui.unit.sp
 fun HomePage(modifier: Modifier = Modifier) {
     Column (
         modifier = modifier
-            .fillMaxSize()
-            .background(Color(0xFF488C9B)),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -34,14 +33,12 @@ fun HomePage(modifier: Modifier = Modifier) {
                 Text(
                     text = "Home Team",
                     fontSize = 20.sp,
-                    color = Color.Black,
                     fontWeight = FontWeight.Normal
                 )
 
                 Text(
                     text = "Away Team",
                     fontSize = 20.sp,
-                    color = Color.Black,
                     fontWeight = FontWeight.Normal
                 )
 
