@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "314444672642",
+    "project_id": "ronaldo-betting-tips-d6943",
+    "storage_bucket": "ronaldo-betting-tips-d6943.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:314444672642:android:c65f2778a5543ba2bf4e9b",
+        "android_client_info": {
+          "package_name": "com.joeahkim.chapaake"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv53XFw1gYWpG5FsCfIAlPNSYkn5sd0kQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

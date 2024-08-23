@@ -12,7 +12,7 @@ import com.joeahkim.chapaake.ui.theme.GreenJC
 @Composable
 fun MyTopAppBar() {
     TopAppBar(
-        title = { Text("Chapaa Ke Tips") },
+        title = { Text("Ronaldo Betting Tips") },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = GreenJC,
             titleContentColor = Color.White

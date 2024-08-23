@@ -1,7 +1,13 @@
 package com.joeahkim.chapaake.pages.listss
 
 
+import android.util.Log
 import java.sql.Date
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -14,24 +20,28 @@ data class PreviousResults(
     var result: String
 )
 
+fun fetchPreviousResults(onDataFetched: (List<PreviousResults>) -> Unit) {
+    val database = Firebase.database
+    val ref = database.getReference("results")
 
-fun getPreviousResults(): List<PreviousResults> {
-    val dateFormatter = DateTimeFormatter.ofPattern("MM/dd/yy")
+    ref.addValueEventListener(object : ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            val resultsList = mutableListOf<PreviousResults>()
+            for (resultSnapshot in snapshot.children) {
+                val result = resultSnapshot.getValue(PreviousResults::class.java)
+                result?.let {
+                    resultsList.add(it)
+                }
+            }
+            // Sort by date
+            val sortedList = resultsList.sortedByDescending {
+                LocalDate.parse(it.date, DateTimeFormatter.ofPattern("M/d/yy"))
+            }
+            onDataFetched(sortedList)
+        }
 
-    return listOf(
-        PreviousResults("Arsenal", "Chelsea", "11/2/23", "Home", "Win"),
-        PreviousResults("Manchester", "Chelsea", "11/2/23", "Home", "Win"),
-        PreviousResults("City", "Chelsea", "11/2/24", "Home", "Loose"),
-        PreviousResults("Tottenham", "Chelsea", "11/2/23", "Home", "Win"),
-        PreviousResults("City", "Chelsea", "11/2/24", "Home", "Loose"),
-        PreviousResults("City", "Chelsea", "11/2/24", "Home", "Loose"),
-        PreviousResults("City", "Chelsea", "11/2/24", "Home", "Loose"),
-        PreviousResults("City", "Chelsea", "11/2/22", "Home", "Loose"),
-        PreviousResults("City", "Chelsea", "11/2/25", "Home", "Loose"),
-        PreviousResults("City", "Chelsea", "11/2/26", "Home", "Loose"),
-        PreviousResults("City", "Chelsea", "11/2/26", "Home", "Loose"),
-        PreviousResults("City", "Chelsea", "11/2/22", "Home", "Loose"),
-    ).sortedByDescending {
-        LocalDate.parse(it.date, dateFormatter)
-    }
+        override fun onCancelled(error: DatabaseError) {
+            // Handle error
+        }
+    })
 }
