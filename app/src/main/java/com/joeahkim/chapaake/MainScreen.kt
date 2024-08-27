@@ -39,8 +39,8 @@ import com.joeahkim.chapaake.pages.Results
 fun MainScreen(modifier: Modifier = Modifier) {
     val navItem = listOf(
         NavItem("Home", Icons.Default.Home, 0),
-        NavItem("Notifications", Icons.Default.Notifications, 5),
-        NavItem("Results", Icons.Default.List, 4),
+        NavItem("Notifications", Icons.Default.Notifications, 0),
+        NavItem("Results", Icons.Default.List, 0),
     )
 
     var selectedIndex by remember { mutableStateOf(0) }

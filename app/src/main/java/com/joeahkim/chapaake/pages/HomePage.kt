@@ -78,6 +78,9 @@ fun HomePage(modifier: Modifier = Modifier) {
                     .padding(16.dp)
                     .padding(top = 80.dp)
             ) {
+                item {
+                    TitleRow()
+                }
                 items(tipsList) { tip ->
                     tipItem(item = tip)
                 }
@@ -156,3 +159,4 @@ fun fetchTodaysTips(onDataFetched: (List<TodaysTip>) -> Unit) {
         }
     })
 }
+
