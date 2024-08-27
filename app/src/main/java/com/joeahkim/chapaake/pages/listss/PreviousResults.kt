@@ -13,11 +13,11 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class PreviousResults(
-    var homeTeam: String,
-    var awayTeam: String,
-    var date: String,
-    var prediction : String,
-    var result: String
+    var homeTeam: String = "",
+    var awayTeam: String = "",
+    var date: String = "",
+    var prediction: String = "",
+    var result: String = ""
 )
 
 fun fetchPreviousResults(onDataFetched: (List<PreviousResults>) -> Unit) {
