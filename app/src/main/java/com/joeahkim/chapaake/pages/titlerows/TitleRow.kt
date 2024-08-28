@@ -1,4 +1,4 @@
-package com.joeahkim.chapaake.pages
+package com.joeahkim.chapaake.pages.titlerows
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -25,23 +25,23 @@ fun TitleRow() {
     ) {
         Text(
             text = "Home Team",
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.weight(2f)
         )
         Text(
             text = "Away Team",
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
+            modifier = Modifier.weight(2f)
+        )
+        Text(
+            text = "Tip",
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.weight(1.5f)
         )
         Text(
             text = "Time",
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-            modifier = Modifier.weight(1f)
-        )
-        Text(
-            text = "Prediction",
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-            modifier = Modifier.weight(1.5f)
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
+            modifier = Modifier.weight(0.75f)
         )
     }
 }

@@ -11,6 +11,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.with
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -37,7 +38,7 @@ import com.joeahkim.chapaake.pages.Results
 
 @Composable
 fun MainScreen(modifier: Modifier = Modifier) {
-    val navItem = listOf(
+    val navItems = listOf(
         NavItem("Home", Icons.Default.Home, 0),
         NavItem("Notifications", Icons.Default.Notifications, 0),
         NavItem("Results", Icons.Default.List, 0),
@@ -46,27 +47,25 @@ fun MainScreen(modifier: Modifier = Modifier) {
     var selectedIndex by remember { mutableStateOf(0) }
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        topBar = {
-            MyTopAppBar()
-        },
+        modifier = modifier.fillMaxSize(),
+        topBar = { MyTopAppBar() },
         bottomBar = {
             NavigationBar {
-                navItem.forEachIndexed { index, navItem ->
+                navItems.forEachIndexed { index, navItem ->
                     NavigationBarItem(
                         selected = selectedIndex == index,
-                        onClick = {
-                            selectedIndex = index
-                        },
+                        onClick = { selectedIndex = index },
                         label = { Text(text = navItem.label) },
                         icon = {
-                            BadgedBox(badge = {
-                                if (navItem.badgeCount > 0) {
-                                    Badge() {
-                                        Text(text = navItem.badgeCount.toString())
+                            BadgedBox(
+                                badge = {
+                                    if (navItem.badgeCount > 0) {
+                                        Badge {
+                                            Text(text = navItem.badgeCount.toString())
+                                        }
                                     }
                                 }
-                            }) {
+                            ) {
                                 Icon(imageVector = navItem.icon, contentDescription = "icon")
                             }
                         }
@@ -75,9 +74,16 @@ fun MainScreen(modifier: Modifier = Modifier) {
             }
         }
     ) { innerPadding ->
-        ContentScreen(modifier = Modifier.padding(innerPadding), selectedIndex)
+        Box(
+            modifier = Modifier
+                .padding(innerPadding)
+                .fillMaxSize() // Ensures the content takes up the remaining space
+        ) {
+            ContentScreen(modifier = Modifier.fillMaxSize(), selectedIndex = selectedIndex)
+        }
     }
 }
+
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -101,7 +107,7 @@ fun ContentScreen(
             0 -> HomePage()
             1 -> NotificationPage()
             2 -> Results()
-            else -> HomePage() // Fallback in case of unexpected index
+            else -> HomePage()
         }
     }
 }

@@ -14,12 +14,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import com.google.android.gms.ads.MobileAds
 import com.joeahkim.chapaake.ui.theme.ChapaaKETheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        MobileAds.initialize(this@MainActivity) {}
         Firebase.database.setPersistenceEnabled(true)
         val splashScreen = installSplashScreen()
         setContent {

@@ -1,5 +1,6 @@
 package com.joeahkim.chapaake.pages
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,12 +11,19 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.joeahkim.chapaake.R
+import com.joeahkim.chapaake.ads.BannerAdView
 import com.joeahkim.chapaake.pages.listss.PreviousResults
 import com.joeahkim.chapaake.pages.listss.fetchPreviousResults
+import com.joeahkim.chapaake.pages.titlerows.ResultsTitleRow
+import com.joeahkim.chapaake.pages.titlerows.TitleRow
 
 @Composable
 fun Results(modifier: Modifier = Modifier) {
@@ -32,27 +40,31 @@ fun Results(modifier: Modifier = Modifier) {
 
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(top = 80.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         if (isLoading) {
-            // Show a loading indicator while the data is being fetched
             CircularProgressIndicator(
-                color = Color.Green, // Customize the color if needed
-                strokeWidth = 4.dp  // Customize the stroke width if needed
+                color = Color.Green,
+                strokeWidth = 4.dp
                 ,modifier = Modifier.padding(top = 80.dp)
             )
             Text(text = "Loading...", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
         } else {
-            LazyColumn {
+            LazyColumn(
+            ) {
+
                 itemsIndexed(items = resultsList) { index, item ->
                     // Optionally group by date
                     if (index == 0 || item.date != resultsList[index - 1].date) {
+                        BannerAdView(adUnitId = "ca-app-pub-3940256099942544/9214589741")
                         DateHeader(date = item.date)
+                        ResultsTitleRow()
+
                     }
                     resultItem(item = item)
+
                 }
             }
         }
@@ -67,7 +79,7 @@ fun DateHeader(date: String) {
             .background(Color.Gray) // Darker shade for the date header
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Start
+        horizontalArrangement = Arrangement.Center
     ) {
         Text(
             text = date,
@@ -106,11 +118,23 @@ fun resultItem(item: PreviousResults) {
             )
         }
         Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = item.result,
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),
-                modifier = Modifier.padding(start = 3.dp)
+//            Text(
+//                text = item.result,
+//                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),
+//                modifier = Modifier.padding(start = 3.dp)
+//            )
+
+            val icon = if (item.result == "Win") {
+                R.drawable.checked // PNG or bitmap resource for the green tick
+            } else {
+                R.drawable.close // PNG or bitmap resource for the red X
+            }
+
+            Image(
+                painter = painterResource(id = icon),
+                contentDescription = null,
+                modifier = Modifier.size(24.dp)
             )
+
         }
-    }
-}
+}}

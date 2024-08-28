@@ -1,7 +1,6 @@
 package com.joeahkim.chapaake.pages
 
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -28,10 +28,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.joeahkim.chapaake.pages.listss.PreviousResults
+import com.joeahkim.chapaake.ads.BannerAdView
 import com.joeahkim.chapaake.pages.listss.TodaysTip
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import com.joeahkim.chapaake.pages.titlerows.TitleRow
+
 @Composable
 fun HomePage(modifier: Modifier = Modifier) {
     var tipsList by remember { mutableStateOf(emptyList<TodaysTip>()) }
@@ -44,17 +44,17 @@ fun HomePage(modifier: Modifier = Modifier) {
     }
 
     if (isLoading) {
-        // Center the loading text
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "Loading...",
-                style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            CircularProgressIndicator(
+                color = Color.Green,
+                strokeWidth = 4.dp, modifier = Modifier.padding(top = 80.dp)
             )
+            Text(text = "Loading...", style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Bold))
+
         }
     } else {
         if (tipsList.isEmpty()) {
@@ -72,17 +72,22 @@ fun HomePage(modifier: Modifier = Modifier) {
                 )
             }
         } else {
-            LazyColumn(
-                modifier = modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-                    .padding(top = 80.dp)
-            ) {
-                item {
-                    TitleRow()
-                }
-                items(tipsList) { tip ->
-                    tipItem(item = tip)
+            Column (
+                modifier = Modifier.fillMaxSize()
+            ){
+                BannerAdView(adUnitId = "ca-app-pub-3940256099942544/9214589741")
+
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    item {
+                        TitleRow()
+                    }
+                    items(tipsList) { tip ->
+                        tipItem(item = tip)
+                    }
                 }
             }
         }
@@ -103,15 +108,15 @@ fun tipItem(item: TodaysTip) {
         ) {
             Text(
                 text = item.homeTeam,
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium)
             )
         }
         Column(
-            modifier = Modifier.weight(1.5f)
+            modifier = Modifier.weight(2f)
         ) {
             Text(
                 text = item.awayTeam,
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold),
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
                 modifier = Modifier.padding(start = 3.dp)
             )
         }
@@ -125,7 +130,7 @@ fun tipItem(item: TodaysTip) {
             )
         }
         Column(
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(0.75f)
         ) {
             Text(
                 text = item.time,
