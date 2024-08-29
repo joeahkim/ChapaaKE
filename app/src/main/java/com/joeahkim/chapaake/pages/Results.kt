@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.joeahkim.chapaake.R
 import com.joeahkim.chapaake.ads.BannerAdView
+import com.joeahkim.chapaake.ads.NativeAdExample
 import com.joeahkim.chapaake.pages.listss.PreviousResults
 import com.joeahkim.chapaake.pages.listss.fetchPreviousResults
 import com.joeahkim.chapaake.pages.titlerows.ResultsTitleRow
@@ -58,7 +60,7 @@ fun Results(modifier: Modifier = Modifier) {
                 itemsIndexed(items = resultsList) { index, item ->
                     // Optionally group by date
                     if (index == 0 || item.date != resultsList[index - 1].date) {
-                        BannerAdView(adUnitId = "ca-app-pub-3940256099942544/9214589741")
+                        NativeAdExample()
                         DateHeader(date = item.date)
                         ResultsTitleRow()
 
@@ -138,3 +140,4 @@ fun resultItem(item: PreviousResults) {
 
         }
 }}
+

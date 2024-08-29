@@ -29,17 +29,25 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.joeahkim.chapaake.ads.BannerAdView
+import com.joeahkim.chapaake.pages.listss.Betslip
 import com.joeahkim.chapaake.pages.listss.TodaysTip
+import com.joeahkim.chapaake.pages.listss.fetchBetslips
 import com.joeahkim.chapaake.pages.titlerows.TitleRow
-
 @Composable
 fun HomePage(modifier: Modifier = Modifier) {
     var tipsList by remember { mutableStateOf(emptyList<TodaysTip>()) }
+    var betslipsList by remember { mutableStateOf(emptyList<Betslip>()) }
     var isLoading by remember { mutableStateOf(true) }
 
     // Fetch today's tips from Firebase
     fetchTodaysTips { fetchedTips ->
         tipsList = fetchedTips
+        isLoading = false
+    }
+
+    // Fetch betslips from Firebase
+    fetchBetslips { fetchedBetslips ->
+        betslipsList = fetchedBetslips
         isLoading = false
     }
 
@@ -57,26 +65,44 @@ fun HomePage(modifier: Modifier = Modifier) {
 
         }
     } else {
-        if (tipsList.isEmpty()) {
-            // Center the "No tips for today." text
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    text = "No tips for today.",
-                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Medium),
-                    color = Color.Gray
-                )
-            }
-        } else {
-            Column (
-                modifier = Modifier.fillMaxSize()
-            ){
-                BannerAdView(adUnitId = "ca-app-pub-3940256099942544/9214589741")
+        Column (
+            modifier = Modifier.fillMaxSize()
+        ){
 
+            // Display Betslips
+            if (betslipsList.isNotEmpty()) {
+                Text(
+                    text = "Betslips",
+                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold),
+                    modifier = Modifier.padding(16.dp)
+                )
+                LazyColumn(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                ) {
+                    items(betslipsList) { betslip ->
+                        betslipItem(item = betslip)
+                    }
+                }
+            }
+
+            // Display Today's Tips
+            if (tipsList.isEmpty()) {
+                // Center the "No tips for today." text
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "No tips for today.",
+                        style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Medium),
+                        color = Color.Gray
+                    )
+                }
+            } else {
                 LazyColumn(
                     modifier = modifier
                         .fillMaxSize()
@@ -93,6 +119,24 @@ fun HomePage(modifier: Modifier = Modifier) {
         }
     }
 }
+@Composable
+fun betslipItem(item: Betslip) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(10.dp),
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        Text(
+            text = item.accumulatorName,
+            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold)
+        )
+        item.tips.forEach { (tipKey, tip) ->
+            tipItem(item = tip)
+        }
+    }
+}
+
 
 @Composable
 fun tipItem(item: TodaysTip) {

@@ -12,6 +12,7 @@ import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.with
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -32,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import com.joeahkim.chapaake.ads.BannerAdView
 import com.joeahkim.chapaake.pages.HomePage
 import com.joeahkim.chapaake.pages.NotificationPage
 import com.joeahkim.chapaake.pages.Results
@@ -49,27 +51,32 @@ fun MainScreen(modifier: Modifier = Modifier) {
     Scaffold(
         modifier = modifier.fillMaxSize(),
         topBar = { MyTopAppBar() },
+
         bottomBar = {
-            NavigationBar {
-                navItems.forEachIndexed { index, navItem ->
-                    NavigationBarItem(
-                        selected = selectedIndex == index,
-                        onClick = { selectedIndex = index },
-                        label = { Text(text = navItem.label) },
-                        icon = {
-                            BadgedBox(
-                                badge = {
-                                    if (navItem.badgeCount > 0) {
-                                        Badge {
-                                            Text(text = navItem.badgeCount.toString())
+
+            Column {
+                BannerAdView(adUnitId = "ca-app-pub-3940256099942544/6300978111")
+                NavigationBar {
+                    navItems.forEachIndexed { index, navItem ->
+                        NavigationBarItem(
+                            selected = selectedIndex == index,
+                            onClick = { selectedIndex = index },
+                            label = { Text(text = navItem.label) },
+                            icon = {
+                                BadgedBox(
+                                    badge = {
+                                        if (navItem.badgeCount > 0) {
+                                            Badge {
+                                                Text(text = navItem.badgeCount.toString())
+                                            }
                                         }
                                     }
+                                ) {
+                                    Icon(imageVector = navItem.icon, contentDescription = "icon")
                                 }
-                            ) {
-                                Icon(imageVector = navItem.icon, contentDescription = "icon")
                             }
-                        }
-                    )
+                        )
+                    }
                 }
             }
         }
