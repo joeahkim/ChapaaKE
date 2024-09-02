@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.Badge
@@ -42,9 +43,10 @@ import com.joeahkim.chapaake.pages.Results
 fun MainScreen(modifier: Modifier = Modifier) {
     val navItems = listOf(
         NavItem("Home", Icons.Default.Home, 0),
-        NavItem("Notifications", Icons.Default.Notifications, 0),
         NavItem("Results", Icons.Default.List, 0),
-    )
+        NavItem("T & C", Icons.Default.Info, 0),
+
+        )
 
     var selectedIndex by remember { mutableStateOf(0) }
 
@@ -116,8 +118,8 @@ fun ContentScreen(
     ) { targetState ->
         when (targetState) {
             0 -> HomePage()
-            1 -> NotificationPage()
-            2 -> Results()
+            1 -> Results()
+            2 -> NotificationPage()
             else -> HomePage()
         }
     }
