@@ -101,25 +101,27 @@ fun resultItem(item: PreviousResults) {
     ) {
         Column(modifier = Modifier.weight(2f)) {
             Text(
-                text = item.homeTeam,
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold)
-            )
-        }
-        Column(modifier = Modifier.weight(1.5f)) {
-            Text(
-                text = item.awayTeam,
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.SemiBold),
+                text = "${item.homeTeam}\n${item.awayTeam}",
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
                 modifier = Modifier.padding(start = 3.dp)
             )
         }
-        Column(modifier = Modifier.weight(1.5f)) {
+
+        Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = item.prediction,
                 style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
                 modifier = Modifier.padding(start = 3.dp)
             )
         }
-        Column(modifier = Modifier.weight(1f)) {
+        Column(modifier = Modifier.weight(1.5f)) {
+            Text(
+                text = item.scores,
+                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium),
+                modifier = Modifier.padding(start = 3.dp)
+            )
+        }
+        Column(modifier = Modifier.weight(1.5f)) {
 //            Text(
 //                text = item.result,
 //                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),

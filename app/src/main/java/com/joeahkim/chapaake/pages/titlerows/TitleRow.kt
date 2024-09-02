@@ -24,12 +24,12 @@ fun TitleRow() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Home Team",
+            text = "League",
             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.weight(2f)
         )
         Text(
-            text = "Away Team",
+            text = "Teams",
             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Bold),
             modifier = Modifier.weight(2f)
         )

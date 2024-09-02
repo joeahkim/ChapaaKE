@@ -13,6 +13,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 data class PreviousResults(
+    var scores: String = "",
     var homeTeam: String = "",
     var awayTeam: String = "",
     var date: String = "",

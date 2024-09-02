@@ -31,12 +31,10 @@ import com.google.firebase.ktx.Firebase
 import com.joeahkim.chapaake.ads.BannerAdView
 import com.joeahkim.chapaake.pages.listss.Betslip
 import com.joeahkim.chapaake.pages.listss.TodaysTip
-import com.joeahkim.chapaake.pages.listss.fetchBetslips
 import com.joeahkim.chapaake.pages.titlerows.TitleRow
 @Composable
 fun HomePage(modifier: Modifier = Modifier) {
     var tipsList by remember { mutableStateOf(emptyList<TodaysTip>()) }
-    var betslipsList by remember { mutableStateOf(emptyList<Betslip>()) }
     var isLoading by remember { mutableStateOf(true) }
 
     // Fetch today's tips from Firebase
@@ -45,11 +43,6 @@ fun HomePage(modifier: Modifier = Modifier) {
         isLoading = false
     }
 
-    // Fetch betslips from Firebase
-    fetchBetslips { fetchedBetslips ->
-        betslipsList = fetchedBetslips
-        isLoading = false
-    }
 
     if (isLoading) {
         Column(
@@ -69,23 +62,6 @@ fun HomePage(modifier: Modifier = Modifier) {
             modifier = Modifier.fillMaxSize()
         ){
 
-            // Display Betslips
-            if (betslipsList.isNotEmpty()) {
-                Text(
-                    text = "Betslips",
-                    style = TextStyle(fontSize = 22.sp, fontWeight = FontWeight.Bold),
-                    modifier = Modifier.padding(16.dp)
-                )
-                LazyColumn(
-                    modifier = modifier
-                        .fillMaxSize()
-                        .padding(16.dp)
-                ) {
-                    items(betslipsList) { betslip ->
-                        betslipItem(item = betslip)
-                    }
-                }
-            }
 
             // Display Today's Tips
             if (tipsList.isEmpty()) {
@@ -119,24 +95,6 @@ fun HomePage(modifier: Modifier = Modifier) {
         }
     }
 }
-@Composable
-fun betslipItem(item: Betslip) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp),
-        verticalArrangement = Arrangement.spacedBy(4.dp)
-    ) {
-        Text(
-            text = item.accumulatorName,
-            style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold)
-        )
-        item.tips.forEach { (tipKey, tip) ->
-            tipItem(item = tip)
-        }
-    }
-}
-
 
 @Composable
 fun tipItem(item: TodaysTip) {
@@ -144,46 +102,32 @@ fun tipItem(item: TodaysTip) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(10.dp),
-        verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.Center
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Column(
+        Text(
+            text = "${item.country}\n${item.league}", // Display the league name
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier.weight(2f)
-        ) {
-            Text(
-                text = item.homeTeam,
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium)
-            )
-        }
-        Column(
+        )
+        Text(
+            text = "${item.homeTeam}\n${item.awayTeam}", // Display home and away teams
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier.weight(2f)
-        ) {
-            Text(
-                text = item.awayTeam,
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-                modifier = Modifier.padding(start = 3.dp)
-            )
-        }
-        Column(
+        )
+        Text(
+            text = item.prediction, // Display the prediction
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier.weight(1.5f)
-        ) {
-            Text(
-                text = item.prediction,
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-                modifier = Modifier.padding(start = 3.dp)
-            )
-        }
-        Column(
+        )
+        Text(
+            text = item.time, // Display the time
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),
             modifier = Modifier.weight(0.75f)
-        ) {
-            Text(
-                text = item.time,
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),
-                modifier = Modifier.padding(start = 3.dp)
-            )
-        }
+        )
     }
 }
+
 
 fun fetchTodaysTips(onDataFetched: (List<TodaysTip>) -> Unit) {
     val database = Firebase.database

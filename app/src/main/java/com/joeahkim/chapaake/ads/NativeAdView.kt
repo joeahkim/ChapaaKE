@@ -18,45 +18,46 @@ import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdOptions
 import com.google.android.gms.ads.nativead.NativeAdView
 import com.joeahkim.chapaake.R
-
 @Composable
 fun NativeAdExample() {
     val context = LocalContext.current
     var nativeAd by remember { mutableStateOf<NativeAd?>(null) }
 
+    // Load the native ad
     LaunchedEffect(Unit) {
         loadNativeAd(context, context.getString(R.string.native_ad_id)) {
             nativeAd = it
         }
     }
 
+    // Ensure that the native ad is released when the composable is removed
+    DisposableEffect(nativeAd) {
+        onDispose {
+            nativeAd?.destroy()  // Clean up the native ad to avoid memory leaks
+        }
+    }
+
+    // Display the native ad if it's loaded
     nativeAd?.let {
         CallNativeAd(it)
-    } ?: run {
     }
 }
 
 fun loadNativeAd(context: Context, adUnitId: String, callback: (NativeAd?) -> Unit) {
-    // AdLoader runs on the main thread, so no need for explicit threading
     val adLoader = AdLoader.Builder(context, adUnitId)
         .forNativeAd { nativeAd ->
-            // The callback is called on the main thread
             callback(nativeAd)
         }
         .withAdListener(object : AdListener() {
             override fun onAdFailedToLoad(adError: LoadAdError) {
-                // The callback is called on the main thread
                 callback(null)
             }
         })
         .withNativeAdOptions(NativeAdOptions.Builder().build())
         .build()
 
-    // AdRequest will run asynchronously; no need for explicit threading
     adLoader.loadAd(AdRequest.Builder().build())
 }
-
-
 
 @Composable
 fun CallNativeAd(nativeAd: NativeAd) {
@@ -80,6 +81,10 @@ fun NativeAdViewComposable(
                 }
                 addView(composeView)
             }
+        },
+        update = { nativeAdView ->
+            // Ensure proper handling of views and content
+            nativeAdView.setNativeAd(nativeAd)
         }
     )
 }

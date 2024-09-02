@@ -24,19 +24,20 @@ fun ResultsTitleRow() {
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Home Team",
+            text = "Teams",
             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier.weight(2f)
         )
-        Text(
-            text = "Away Team",
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-            modifier = Modifier.weight(1.5f)
-        )
+
         Text(
             text = "Tip",
             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier.weight(1f)
+        )
+        Text(
+            text = "Scores",
+            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
+            modifier = Modifier.weight(1.5f)
         )
         Text(
             text = "Result",

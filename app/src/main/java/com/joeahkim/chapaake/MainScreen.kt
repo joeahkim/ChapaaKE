@@ -56,6 +56,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
 
             Column {
                 BannerAdView(adUnitId = "ca-app-pub-3940256099942544/6300978111")
+
                 NavigationBar {
                     navItems.forEachIndexed { index, navItem ->
                         NavigationBarItem(
@@ -87,8 +88,11 @@ fun MainScreen(modifier: Modifier = Modifier) {
                 .fillMaxSize() // Ensures the content takes up the remaining space
         ) {
             ContentScreen(modifier = Modifier.fillMaxSize(), selectedIndex = selectedIndex)
+
         }
+
     }
+
 }
 
 
