@@ -57,7 +57,7 @@ fun MainScreen(modifier: Modifier = Modifier) {
         bottomBar = {
 
             Column {
-                BannerAdView(adUnitId = "ca-app-pub-3940256099942544/6300978111")
+                BannerAdView(adUnitId = "ca-app-pub-4576642380177322/1132959828")
 
                 NavigationBar {
                     navItems.forEachIndexed { index, navItem ->
