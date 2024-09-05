@@ -29,6 +29,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.joeahkim.chapaake.ads.BannerAdView
+import com.joeahkim.chapaake.ads.NativeAdExample
+import com.joeahkim.chapaake.convertKenyanTimeToLocal
 import com.joeahkim.chapaake.pages.listss.Betslip
 import com.joeahkim.chapaake.pages.listss.TodaysTip
 import com.joeahkim.chapaake.pages.titlerows.TitleRow
@@ -84,7 +86,11 @@ fun HomePage(modifier: Modifier = Modifier) {
                         .fillMaxSize()
                         .padding(16.dp)
                 ) {
+                    item{
+                        NativeAdExample()
+                    }
                     item {
+
                         TitleRow()
                     }
                     items(tipsList) { tip ->
@@ -98,6 +104,8 @@ fun HomePage(modifier: Modifier = Modifier) {
 
 @Composable
 fun tipItem(item: TodaysTip) {
+    val localTime = convertKenyanTimeToLocal(item.time)
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,7 +129,7 @@ fun tipItem(item: TodaysTip) {
             modifier = Modifier.weight(1.5f)
         )
         Text(
-            text = item.time, // Display the time
+            text = localTime, // Display the time
             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),
             modifier = Modifier.weight(0.75f)
         )
