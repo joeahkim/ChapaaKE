@@ -26,6 +26,7 @@ import com.joeahkim.chapaake.pages.listss.PreviousResults
 import com.joeahkim.chapaake.pages.listss.fetchPreviousResults
 import com.joeahkim.chapaake.pages.titlerows.ResultsTitleRow
 import com.joeahkim.chapaake.pages.titlerows.TitleRow
+import com.joeahkim.chapaake.ui.theme.GreenJC
 
 @Composable
 fun Results(modifier: Modifier = Modifier) {
@@ -58,15 +59,12 @@ fun Results(modifier: Modifier = Modifier) {
             ) {
 
                 itemsIndexed(items = resultsList) { index, item ->
-                    // Optionally group by date
+                    //group by date
                     if (index == 0 || item.date != resultsList[index - 1].date) {
                         NativeAdExample()
                         DateHeader(date = item.date)
-                        ResultsTitleRow()
-
                     }
-                    resultItem(item = item)
-
+                    ResultItem(item = item)
                 }
             }
         }
@@ -78,7 +76,7 @@ fun DateHeader(date: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.Gray) // Darker shade for the date header
+            .background(GreenJC) // Darker shade for the date header
             .padding(8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
@@ -91,55 +89,62 @@ fun DateHeader(date: String) {
 }
 
 @Composable
-fun resultItem(item: PreviousResults) {
-    Row(
+fun ResultItem(item: PreviousResults) {
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(8.dp),
-        verticalAlignment = Alignment.Top,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .padding(10.dp) // Set a lighter background color
+            .padding(10.dp) // Inner padding for content
     ) {
-        Column(modifier = Modifier.weight(2f)) {
-            Text(
-                text = "${item.homeTeam}\n${item.awayTeam}",
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-                modifier = Modifier.padding(start = 3.dp)
-            )
-        }
+        // Home and away teams at the top
+        Text(
+            text = "${item.homeTeam} vs ${item.awayTeam}",
+            style = TextStyle(fontSize = 20.sp, fontWeight = FontWeight.Medium),
+            modifier = Modifier.align(Alignment.Start) // Align to the start
+        )
 
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = item.prediction,
-                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-                modifier = Modifier.padding(start = 3.dp)
-            )
-        }
-        Column(modifier = Modifier.weight(1.5f)) {
-            Text(
-                text = item.scores,
-                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Medium),
-                modifier = Modifier.padding(start = 3.dp)
-            )
-        }
-        Column(modifier = Modifier.weight(1.5f)) {
-//            Text(
-//                text = item.result,
-//                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),
-//                modifier = Modifier.padding(start = 3.dp)
-//            )
+        Spacer(modifier = Modifier.height(4.dp)) // Small spacing between rows
 
+        // Prediction in the middle
+        Text(
+            text = "Prediction: ${item.prediction}",
+            style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium),
+            modifier = Modifier.align(Alignment.Start) // Align to the start
+        )
+
+        Spacer(modifier = Modifier.height(4.dp)) // Small spacing between rows
+
+        // Scores and result icons
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 5.dp),
+            horizontalArrangement = Arrangement.SpaceBetween // Spread items out evenly
+        ) {
+            // Display the scores
+            Text(
+                text = "Scores: ${item.scores}",
+                style = TextStyle(fontSize = 18.sp, fontWeight = FontWeight.Bold),
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+
+            // Display result as an icon
             val icon = if (item.result == "Win") {
-                R.drawable.checked // PNG or bitmap resource for the green tick
+                R.drawable.checked // Green tick for "Win"
             } else {
-                R.drawable.close // PNG or bitmap resource for the red X
+                R.drawable.close // Red X for "Loss"
             }
 
             Image(
                 painter = painterResource(id = icon),
                 contentDescription = null,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier
+                    .size(24.dp)
+                    .align(Alignment.CenterVertically)
             )
-
         }
-}}
+    }
 
+    // Spacer between results
+    Spacer(modifier = Modifier.height(5.dp)) // 5dp spacing between each item
+}

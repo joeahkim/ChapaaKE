@@ -1,14 +1,18 @@
 package com.joeahkim.chapaake.pages
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -89,12 +93,17 @@ fun HomePage(modifier: Modifier = Modifier) {
                     item{
                         NativeAdExample()
                     }
-                    item {
+//                    item {
+//
+//                        TitleRow()
+//                    }
+                    itemsIndexed(tipsList) { index, tip ->
 
-                        TitleRow()
-                    }
-                    items(tipsList) { tip ->
-                        tipItem(item = tip)
+                        TipItem(item = tip)
+
+                        if ((index + 1) % 3 == 0) {
+                            NativeAdExample()
+                        }
                     }
                 }
             }
@@ -103,38 +112,52 @@ fun HomePage(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun tipItem(item: TodaysTip) {
+fun TipItem(item: TodaysTip) {
     val localTime = convertKenyanTimeToLocal(item.time)
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(10.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .padding(10.dp)
+            .padding(10.dp) // Inner padding for content
     ) {
+        // Country and league at the top start
         Text(
-            text = "${item.country}\n${item.league}", // Display the league name
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-            modifier = Modifier.weight(2f)
+            text = "${item.country} - ${item.league}",
+            style = TextStyle(fontSize = 15.sp, fontWeight = FontWeight.Bold),
+            modifier = Modifier.align(Alignment.Start) // Align to the start
         )
+
+        // Time below the country and league
         Text(
-            text = "${item.homeTeam}\n${item.awayTeam}", // Display home and away teams
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-            modifier = Modifier.weight(2f)
-        )
-        Text(
-            text = item.prediction, // Display the prediction
-            style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
-            modifier = Modifier.weight(1.5f)
-        )
-        Text(
-            text = localTime, // Display the time
+            text = localTime,
             style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Light),
-            modifier = Modifier.weight(0.75f)
+            modifier = Modifier.align(Alignment.Start) // Align to the start
+        )
+
+        // Home and away team centered
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 5.dp),
+            horizontalArrangement = Arrangement.Center // Center the teams
+        ) {
+            Text(
+                text = "${item.homeTeam} vs ${item.awayTeam}",
+                style = TextStyle(fontSize = 16.sp, fontWeight = FontWeight.Medium),
+                modifier = Modifier.align(Alignment.CenterVertically)
+            )
+        }
+
+        // Prediction tip at the bottom start
+        Text(
+            text = "Prediction: ${item.prediction}",
+            style = TextStyle(fontSize = 14.sp, fontWeight = FontWeight.Medium),
+            modifier = Modifier.align(Alignment.Start) // Align to the start
         )
     }
-}
+
+    }
 
 
 fun fetchTodaysTips(onDataFetched: (List<TodaysTip>) -> Unit) {
