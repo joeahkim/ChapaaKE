@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         MobileAds.initialize(this@MainActivity) {}
-        Firebase.database.setPersistenceEnabled(true)
+        Firebase.database.setPersistenceEnabled(false)
         val splashScreen = installSplashScreen()
         setContent {
             ChapaaKETheme {

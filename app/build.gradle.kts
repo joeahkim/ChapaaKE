@@ -66,6 +66,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.android.gms:play-services-ads:23.3.0")
     implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation("androidx.compose.foundation:foundation:1.7.3")
     implementation(libs.firebase.database.ktx)
     implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)

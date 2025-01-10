@@ -164,6 +164,8 @@ fun fetchTodaysTips(onDataFetched: (List<TodaysTip>) -> Unit) {
     val database = Firebase.database
     val ref = database.getReference("todaysTips")
 
+    ref.keepSynced(false)
+
     ref.addListenerForSingleValueEvent(object : ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             val tipsList = mutableListOf<TodaysTip>()
